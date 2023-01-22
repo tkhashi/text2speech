@@ -1,4 +1,5 @@
 ﻿using Google.Cloud.TextToSpeech.V1;
+using System.Runtime.CompilerServices;
 
 namespace TextToSpeech.SynthesisInputConfig
 {
@@ -24,6 +25,12 @@ namespace TextToSpeech.SynthesisInputConfig
             };
 
             return input;
+        }
+
+        public static SynthesisInput SetText(this SynthesisInput synthesisInput, string text)
+        {
+            synthesisInput.Text = text;
+            return synthesisInput;
         }
     }
 }

@@ -18,11 +18,31 @@
                 Text="{Binding InputText.Value}"/>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="早さ" Margin="0 0 30 0"/>
-            <Slider Width="300" Value="{Binding SpeakingRate.Value}"/>
+            <TextBlock Text="{Binding SpeakingRate.Value, StringFormat={}{0:F1}}"/>
+            <Slider Width="300" Value="{Binding SpeakingRate.Value}"
+                    Minimum="0.5"
+                    Maximum="2"
+                    TickPlacement="BottomRight"
+                    TickFrequency="0.1"
+                    IsSnapToTickEnabled="True"
+                    SmallChange="0.1"
+                    LargeChange="0.1"
+                    Orientation="Horizontal"
+                    />
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="ピッチ" Margin="0 0 25 0"/>
-            <Slider Width="300" Value="{Binding Pitch.Value}"/>
+            <TextBlock Text="{Binding Pitch.Value, StringFormat={}{0:F1}}"/>
+            <Slider Width="300" Value="{Binding Pitch.Value}"
+                    Minimum="-20"
+                    Maximum="20"
+                    TickPlacement="BottomRight"
+                    TickFrequency="1"
+                    IsSnapToTickEnabled="True"
+                    SmallChange="1"
+                    LargeChange="0.5"
+                    Orientation="Horizontal"
+                    />
         </StackPanel>
         <Button Content="GO!!!!!" Width="100" Height="30" Command="{Binding SpeechCommand}"/>
     </StackPanel>

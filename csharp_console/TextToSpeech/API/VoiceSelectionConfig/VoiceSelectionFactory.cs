@@ -1,4 +1,5 @@
 ﻿using Google.Cloud.TextToSpeech.V1;
+using TextToSpeech.AudioConfig;
 
 namespace TextToSpeech.VoiceSelection
 {
@@ -21,7 +22,7 @@ namespace TextToSpeech.VoiceSelection
                 /// available), or even a different language, e.g. using "nb" (Norwegian
                 /// Bokmal) instead of "no" (Norwegian)".
                 /// </summary>
-                LanguageCode = "en-US",
+                LanguageCode = Languege.Japanese.ToRFCTags(),
 
                 /// <summary>
                 /// The name of the voice. If not set, the service will choose a

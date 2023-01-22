@@ -1,26 +1,54 @@
-﻿using Reactive.Bindings;
+﻿using System;
+using Reactive.Bindings;
+using Reactive.Bindings.Extensions;
+using System.Reactive.Disposables;
+using System.Windows.Input;
 
 namespace TextToSpeechWPF
 {
-    class MainWindowViewModel
+    class MainWindowViewModel : IDisposable
     {
+        private readonly CompositeDisposable _disposables = new();
         private readonly MainWindowModel _model;
 
-        public ReactivePropertySlim<string> InputText { get; } = new();
-        public ReactivePropertySlim<double> SpeakingRate { get; } = new();
-        public ReactivePropertySlim<double> Pitch { get; } = new();
+        public ReactivePropertySlim<bool> IsGenerating { get; }
+        public ReactivePropertySlim<string> InputText { get; }
+        public ReactivePropertySlim<double> SpeakingRate { get; } 
+        public ReactivePropertySlim<double> Pitch { get; } 
         public ReactiveCommand SpeechCommand { get; } = new ();
-
 
         public MainWindowViewModel()
         {
             _model = new MainWindowModel();
-            SpeechCommand.Subscribe(Speech);
+            IsGenerating = _model.IsGenerating;
+            InputText = _model.Text;
+            SpeakingRate = _model.Rate;
+            Pitch = _model.Pitch;
+            SpeechCommand = IsGenerating.Inverse().ToReactiveCommand();
+            SpeechCommand.Subscribe(Speech).AddTo(_disposables);
         }
 
         private void Speech()
         {
-            _model.Speech();
+            Mouse.OverrideCursor = Cursors.Wait;
+            try
+            {
+                _model.Speech();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                Mouse.OverrideCursor = default;
+            }
+        }
+
+        public void Dispose()
+        {
+            _disposables.Dispose();
         }
     }
 }

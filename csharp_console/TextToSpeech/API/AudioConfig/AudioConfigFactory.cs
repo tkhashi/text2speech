@@ -57,7 +57,15 @@ namespace TextToSpeech.AudioConfig
                 //EffectsProfileId = ,
             };
             return audioConfig;
+        }
 
+        public static Google.Cloud.TextToSpeech.V1.AudioConfig SetAudioConfig(this Google.Cloud.TextToSpeech.V1.AudioConfig config,
+            double speakingRate, double pitch)
+        {
+            config.SpeakingRate = speakingRate;
+            config.Pitch = pitch;
+
+            return config;
         }
     }
 }
