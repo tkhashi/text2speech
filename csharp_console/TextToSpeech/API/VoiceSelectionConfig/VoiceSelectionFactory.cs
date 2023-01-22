@@ -41,7 +41,7 @@ namespace TextToSpeech.VoiceSelection
                 /// configuration.
                 /// </summary>
                 //CustomVoice = new CustomVoiceParams();
-            }
+            };
 
             return voiceSelectionParams;
         }
