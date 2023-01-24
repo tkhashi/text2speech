@@ -17,6 +17,8 @@ namespace TextToSpeechWPF
         public ReactivePropertySlim<double> Pitch { get; } 
         public ReactiveCommand SpeechCommand { get; } = new ();
 
+        public ReactiveCollection<FileOperationViewModel> FileOperations { get; } = new ();
+
         public MainWindowViewModel()
         {
             _model = new MainWindowModel();
@@ -26,6 +28,11 @@ namespace TextToSpeechWPF
             Pitch = _model.Pitch;
             SpeechCommand = IsGenerating.Inverse().ToReactiveCommand();
             SpeechCommand.Subscribe(Speech).AddTo(_disposables);
+
+            // Mock
+            FileOperations.Add(new FileOperationViewModel());
+            FileOperations.Add(new FileOperationViewModel());
+            FileOperations.Add(new FileOperationViewModel());
         }
 
         private void Speech()

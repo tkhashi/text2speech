@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TextToSpeechWPF"
+        SizeToContent="WidthAndHeight"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.DataContext>
@@ -16,7 +17,7 @@
                 AcceptsReturn="true"
                 VerticalContentAlignment="Top"
                 Text="{Binding InputText.Value}"/>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="早さ" Margin="0 0 30 0"/>
             <TextBlock Text="{Binding SpeakingRate.Value, StringFormat={}{0:F1}}"/>
             <Slider Width="300" Value="{Binding SpeakingRate.Value}"
@@ -30,7 +31,7 @@
                     Orientation="Horizontal"
                     />
         </StackPanel>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="ピッチ" Margin="0 0 25 0"/>
             <TextBlock Text="{Binding Pitch.Value, StringFormat={}{0:F1}}"/>
             <Slider Width="300" Value="{Binding Pitch.Value}"
@@ -45,5 +46,34 @@
                     />
         </StackPanel>
         <Button Content="GO!!!!!" Width="100" Height="30" Command="{Binding SpeechCommand}"/>
+        <!--生成物一覧-->
+        <StackPanel Margin="20" HorizontalAlignment="Center">
+            <DataGrid
+                ItemsSource="{Binding FileOperations}"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                BorderThickness="0"
+                CanUserAddRows="False"
+                CanUserDeleteRows="False"
+                GridLinesVisibility="None"
+                HeadersVisibility="None"
+                AlternatingRowBackground="Azure"
+                AlternationCount="6"
+                ColumnWidth="SizeToCells"
+                >
+                <DataGrid.Resources>
+                    <DataTemplate x:Key="SaveButtonTemplate">
+                        <Button Content="保存" Width="100" Height="30"
+                                Command="{Binding MoveMp4}"/>
+                    </DataTemplate>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn MinWidth="200" Binding="{Binding Name.Value}"/>
+                    <!--TODO: スピーチ再生コントロール-->
+                    <DataGridTextColumn MinWidth="200" Binding="{Binding Name.Value}"/>
+                    <DataGridTemplateColumn CellTemplate="{StaticResource SaveButtonTemplate}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
     </StackPanel>
 </Window>
