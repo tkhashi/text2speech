@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TextToSpeechWPF"
         SizeToContent="WidthAndHeight"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="TextToSpeech">
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
@@ -66,11 +66,21 @@
                         <Button Content="保存" Width="100" Height="30"
                                 Command="{Binding MoveMp4}"/>
                     </DataTemplate>
+                    <DataTemplate x:Key="MediaPlayerTemplate">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <ToggleButton />
+                            <TextBlock />
+                            <Slider Minimum="0" Maximum="1" Width="200" 
+                                    IsEnabled="False" SmallChange="0" LargeChange="0"
+                                    />
+                            <TextBlock />
+                        </StackPanel>
+                    </DataTemplate>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn MinWidth="200" Binding="{Binding Name.Value}"/>
                     <!--TODO: スピーチ再生コントロール-->
-                    <DataGridTextColumn MinWidth="200" Binding="{Binding Name.Value}"/>
+                    <DataGridTemplateColumn CellTemplate="{StaticResource MediaPlayerTemplate}"/>
                     <DataGridTemplateColumn CellTemplate="{StaticResource SaveButtonTemplate}"/>
                 </DataGrid.Columns>
             </DataGrid>
