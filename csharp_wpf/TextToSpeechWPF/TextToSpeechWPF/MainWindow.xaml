@@ -49,7 +49,7 @@
         <!--生成物一覧-->
         <StackPanel Margin="20" HorizontalAlignment="Center">
             <DataGrid
-                ItemsSource="{Binding FileOperations}"
+                ItemsSource="{Binding AudioOperations}"
                 AutoGenerateColumns="False"
                 IsReadOnly="True"
                 BorderThickness="0"
@@ -64,16 +64,25 @@
                 <DataGrid.Resources>
                     <DataTemplate x:Key="SaveButtonTemplate">
                         <Button Content="保存" Width="100" Height="30"
-                                Command="{Binding MoveMp4}"/>
+                                Command="{Binding SaveCommand}"/>
                     </DataTemplate>
                     <DataTemplate x:Key="MediaPlayerTemplate">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                            <ToggleButton />
-                            <TextBlock />
-                            <Slider Minimum="0" Maximum="1" Width="200" 
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Button Content="&#xE769;"
+                                    FontFamily="Segoe MDL2 Assets"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Command="{Binding StopCommand}"/>
+                            <Button Content="&#xE768;"
+                                    FontFamily="Segoe MDL2 Assets"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Command="{Binding PlayCommand}"/>
+                            <TextBlock Name="CurrentTime" Text="{Binding CurrentTime.Value}"/>
+                            <Slider Minimum="0" Maximum="{Binding AudioTimeRange.Value}" Width="200" 
                                     IsEnabled="False" SmallChange="0" LargeChange="0"
                                     />
-                            <TextBlock />
+                            <TextBlock Name="RemainTime" Text="{Binding RemainTime.Value}"/>
                         </StackPanel>
                     </DataTemplate>
                 </DataGrid.Resources>

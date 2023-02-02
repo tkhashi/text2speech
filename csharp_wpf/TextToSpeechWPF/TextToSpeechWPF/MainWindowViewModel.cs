@@ -3,6 +3,7 @@ using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Reactive.Disposables;
 using System.Windows.Input;
+using System.ComponentModel;
 
 namespace TextToSpeechWPF
 {
@@ -17,7 +18,7 @@ namespace TextToSpeechWPF
         public ReactivePropertySlim<double> Pitch { get; } 
         public ReactiveCommand SpeechCommand { get; } = new ();
 
-        public ReactiveCollection<FileOperationViewModel> FileOperations { get; } = new ();
+        public ReactiveCollection<AudioOperationViewModel> AudioOperations { get; } = new ();
 
         public MainWindowViewModel()
         {
@@ -30,9 +31,9 @@ namespace TextToSpeechWPF
             SpeechCommand.Subscribe(Speech).AddTo(_disposables);
 
             // Mock
-            FileOperations.Add(new FileOperationViewModel());
-            FileOperations.Add(new FileOperationViewModel());
-            FileOperations.Add(new FileOperationViewModel());
+            Add("");
+            Add("");
+            Add("");
         }
 
         private void Speech()
@@ -51,6 +52,11 @@ namespace TextToSpeechWPF
             {
                 Mouse.OverrideCursor = default;
             }
+        }
+
+        private void Add(string path)
+        {
+            AudioOperations.Add(new AudioOperationViewModel(path));
         }
 
         public void Dispose()
