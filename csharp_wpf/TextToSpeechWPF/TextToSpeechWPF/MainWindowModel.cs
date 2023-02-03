@@ -21,8 +21,8 @@ namespace TextToSpeechWPF
             try
             {
                 var gcEnv = "GOOGLE_APPLICATION_CREDENTIALS";
-                var credentias = @"./credentials.json";
-                Environment.SetEnvironmentVariable(gcEnv, credentias);
+                var credentials = @"./credentials.json";
+                Environment.SetEnvironmentVariable(gcEnv, credentials);
 
                 var client = TextToSpeechClient.Create();
                 var input = SynthesisInputFactory.Create().SetText(Text.Value);
