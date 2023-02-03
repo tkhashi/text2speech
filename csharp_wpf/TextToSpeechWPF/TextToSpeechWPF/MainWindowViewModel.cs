@@ -4,6 +4,8 @@ using Reactive.Bindings.Extensions;
 using System.Reactive.Disposables;
 using System.Windows.Input;
 using System.ComponentModel;
+using System.IO;
+using System.Linq;
 
 namespace TextToSpeechWPF
 {
@@ -29,6 +31,13 @@ namespace TextToSpeechWPF
             Pitch = _model.Pitch;
             SpeechCommand = IsGenerating.Inverse().ToReactiveCommand();
             SpeechCommand.Subscribe(Speech).AddTo(_disposables);
+
+            var sourceDir = @"";
+            var dirInfo = new DirectoryInfo(sourceDir);
+            dirInfo.GetFiles("*.mp3", SearchOption.AllDirectories)
+                .ToList()
+                .ForEach(x => Add(x.Name));
+
 
             // Mock
             Add("");

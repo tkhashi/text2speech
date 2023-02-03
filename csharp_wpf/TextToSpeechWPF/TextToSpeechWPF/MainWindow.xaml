@@ -88,7 +88,6 @@
                 </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn MinWidth="200" Binding="{Binding Name.Value}"/>
-                    <!--TODO: スピーチ再生コントロール-->
                     <DataGridTemplateColumn CellTemplate="{StaticResource MediaPlayerTemplate}"/>
                     <DataGridTemplateColumn CellTemplate="{StaticResource SaveButtonTemplate}"/>
                 </DataGrid.Columns>
