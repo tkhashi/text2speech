@@ -27,11 +27,13 @@ namespace TextToSpeechWPF
         {
             _model = new AudioOperationModel(path);
             SaveCommand
-                .Subscribe(() => _model.MoveMp4())
+                .Subscribe(() => _model.MoveMp4(_model.FileName))
                 .AddTo(_disposables);
+
             DeleteCommand
                 .Subscribe(() => _model.DeleteMp4())
                 .AddTo(_disposables);
+
             PlayCommand
                 .Subscribe(() => 
                 {
