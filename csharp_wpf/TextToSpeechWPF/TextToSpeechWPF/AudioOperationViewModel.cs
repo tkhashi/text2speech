@@ -17,7 +17,7 @@ namespace TextToSpeechWPF
         public ReactiveCommand PlayCommand { get; } = new ();
         public ReactiveCommand StopCommand { get; } = new ();
 
-        public ReactivePropertySlim<string> Name { get; } = new("test1");
+        public ReactivePropertySlim<string> Name { get; } 
         public ReactivePropertySlim<bool> IsPlaying { get; } = new ();
         public ReactivePropertySlim<string> CurrentTime { get; } = new ();
         public ReactivePropertySlim<double> AudioTimeRange { get; } = new ();
@@ -47,6 +47,8 @@ namespace TextToSpeechWPF
                     _model.Stop();
                 })
                 .AddTo(_disposables);
+
+            Name = new ReactivePropertySlim<string> (_model.FileName);
         }
 
         public void Dispose()

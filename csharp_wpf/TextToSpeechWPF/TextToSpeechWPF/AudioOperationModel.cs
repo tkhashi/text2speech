@@ -1,5 +1,6 @@
 ﻿using Reactive.Bindings;
 using System;
+using System.IO;
 
 namespace TextToSpeechWPF
 {
@@ -15,6 +16,7 @@ namespace TextToSpeechWPF
         public AudioOperationModel(string path)
         {
             _path = path;
+            FileName = Path.GetFileNameWithoutExtension(path);
         }
 
         public void ChangeFileName(string fileName)

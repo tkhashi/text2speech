@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Diagnostics;
 
 namespace TextToSpeechWPF
 {
@@ -32,17 +33,18 @@ namespace TextToSpeechWPF
             SpeechCommand = IsGenerating.Inverse().ToReactiveCommand();
             SpeechCommand.Subscribe(Speech).AddTo(_disposables);
 
-            var sourceDir = @"";
-            var dirInfo = new DirectoryInfo(sourceDir);
-            dirInfo.GetFiles("*.mp3", SearchOption.AllDirectories)
-                .ToList()
-                .ForEach(x => Add(x.Name));
+            var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var sourceDir = Path.Combine(localAppData, "Text2Speech");
+            Directory.CreateDirectory(sourceDir);
 
+            Directory.GetFiles(sourceDir, "*.mp3", SearchOption.TopDirectoryOnly)
+                .ToList()
+                .ForEach(x => AddFilePath(x));
 
             // Mock
-            Add("");
-            Add("");
-            Add("");
+            AddFilePath("test1");
+            AddFilePath("test2");
+            AddFilePath("test3");
         }
 
         private void Speech()
@@ -63,7 +65,7 @@ namespace TextToSpeechWPF
             }
         }
 
-        private void Add(string path)
+        private void AddFilePath(string path)
         {
             AudioOperations.Add(new AudioOperationViewModel(path));
         }
