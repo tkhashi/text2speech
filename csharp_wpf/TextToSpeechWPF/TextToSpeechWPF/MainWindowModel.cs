@@ -31,8 +31,9 @@ namespace TextToSpeechWPF
 
                 SynthesizeSpeechResponse response = client.SynthesizeSpeech(input, voiceSelection, audioConfig);
 
-                var outputDir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                using var output = File.Create($"{outputDir}/sample.mp3");
+                var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                var outputDir = Path.Combine(localAppData, "Text2Speech");
+                using var output = File.Create(Path.Combine(outputDir, "sample.mp3"));
                 response.AudioContent.WriteTo(output);
             }
             catch (Exception e)
