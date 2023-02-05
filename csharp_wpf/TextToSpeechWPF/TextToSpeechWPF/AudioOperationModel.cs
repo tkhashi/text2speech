@@ -3,13 +3,16 @@ using NAudio.Wave;
 using Reactive.Bindings;
 using System;
 using System.IO;
+using System.Reactive.Disposables;
 
 namespace TextToSpeechWPF
 {
-    public class AudioOperationModel
+    public class AudioOperationModel : IDisposable
     {
+        private readonly CompositeDisposable _disposables = new();
         private readonly string _path;
-        private WaveOutEvent _outputDevice;
+        private readonly WaveOutEvent _outputDevice;
+        private AudioFileReader _reader;
 
         public string FileName { get; private set; } 
 
@@ -21,6 +24,14 @@ namespace TextToSpeechWPF
         {
             _path = path;
             _outputDevice = new WaveOutEvent();
+            _disposables.Add(_outputDevice);
+
+            if (File.Exists(path))
+            {
+                _reader = new AudioFileReader(path);
+                _disposables.Add(_reader);
+            }
+
             FileName = Path.GetFileNameWithoutExtension(path);
         }
 
@@ -49,14 +60,23 @@ namespace TextToSpeechWPF
         }
         public void Play()
         {
-            using var afr = new AudioFileReader(_path);
-            _outputDevice.Init(afr);
+            // 停止時・再生時は初期化しない
+            if (_outputDevice.PlaybackState is not (PlaybackState.Paused or PlaybackState.Playing))
+            {
+                _outputDevice.Init(_reader);
+                _reader.Position = 0;
+            }
             _outputDevice.Play();
         }
 
         public void Stop()
         {
+            _outputDevice.Pause();
         }
 
+        public void Dispose()
+        {
+            _disposables.Dispose();
+        }
     }
 }
