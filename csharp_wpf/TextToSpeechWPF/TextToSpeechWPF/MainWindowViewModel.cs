@@ -3,10 +3,8 @@ using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Reactive.Disposables;
 using System.Windows.Input;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Diagnostics;
 
 namespace TextToSpeechWPF
 {
@@ -40,11 +38,6 @@ namespace TextToSpeechWPF
             Directory.GetFiles(sourceDir, "*.mp3", SearchOption.TopDirectoryOnly)
                 .ToList()
                 .ForEach(x => AddFilePath(x));
-
-            // Mock
-            AddFilePath("test1");
-            AddFilePath("test2");
-            AddFilePath("test3");
         }
 
         private void Speech()
