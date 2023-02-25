@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reactive.Disposables;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace TextToSpeechWPF
@@ -17,11 +16,11 @@ namespace TextToSpeechWPF
         private readonly WaveOutEvent _outputDevice;
         private AudioFileReader _reader;
 
-        public string FileName { get; private set; }
+        public string FileName { get; private set; } 
 
-        public ReactivePropertySlim<TimeSpan> CurrentTime { get; }
-        public ReactivePropertySlim<TimeSpan> AudioTimeRange { get; } 
-        public ReactivePropertySlim<TimeSpan> RemainTime { get; } 
+        public ReactivePropertySlim<TimeSpan> CurrentTime { get; } = new ();
+        public ReactivePropertySlim<TimeSpan> AudioTimeRange { get; } = new ();
+        public ReactivePropertySlim<TimeSpan> RemainTime { get; } = new ();
 
         public AudioOperationModel(string path)
         {
@@ -32,9 +31,6 @@ namespace TextToSpeechWPF
             _disposables.Add(_reader);
 
             FileName = Path.GetFileNameWithoutExtension(path);
-            CurrentTime = new ReactivePropertySlim<TimeSpan>(TimeSpan.Zero);
-            AudioTimeRange = new ReactivePropertySlim<TimeSpan>(_reader.TotalTime);
-            RemainTime = new ReactivePropertySlim<TimeSpan>(TimeSpan.Zero);
         }
 
         public void ChangeFileName(string fileName)
@@ -73,15 +69,6 @@ namespace TextToSpeechWPF
                 _reader.Position = 0;
             }
             _outputDevice.Play();
-
-            Task.Run(() =>
-            {
-                while (_outputDevice.PlaybackState is PlaybackState.Playing)
-                {
-                    CurrentTime.Value = _reader.CurrentTime;
-                    RemainTime.Value = AudioTimeRange.Value - CurrentTime.Value;
-                }
-            });
         }
 
         public void Stop()
