@@ -2,6 +2,7 @@
 using Reactive.Bindings.Extensions;
 using System;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Text;
 
 namespace TextToSpeechWPF
@@ -19,9 +20,9 @@ namespace TextToSpeechWPF
 
         public ReactivePropertySlim<string> Name { get; } 
         public ReactivePropertySlim<bool> IsPlaying { get; } = new ();
-        public ReactivePropertySlim<string> CurrentTime { get; } = new ();
-        public ReactivePropertySlim<double> AudioTimeRange { get; } = new ();
-        public ReactivePropertySlim<string> RemainTime { get; } = new ();
+        public ReactiveProperty<double> CurrentTime { get; }
+        public ReactiveProperty<double> AudioTimeRange { get; }
+        public ReactiveProperty<double> RemainTime { get; }
 
         public AudioOperationViewModel(string path)
         {
@@ -51,6 +52,9 @@ namespace TextToSpeechWPF
                 .AddTo(_disposables);
 
             Name = new ReactivePropertySlim<string> (_model.FileName);
+            CurrentTime = _model.CurrentTime.Select(x => x.TotalMinutes).ToReactiveProperty();
+            AudioTimeRange = _model.AudioTimeRange.Select(x => x.TotalMinutes).ToReactiveProperty();
+            RemainTime = _model.AudioTimeRange.Select(x => x.TotalMinutes).ToReactiveProperty();
         }
 
         public void Dispose()

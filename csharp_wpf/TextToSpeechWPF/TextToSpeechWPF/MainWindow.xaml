@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TextToSpeechWPF"
+        xmlns:behaviors="clr-namespace:TextToSpeechWPF.Behaviors"
+        xmlns:bhv="http://schemas.microsoft.com/xaml/behaviors" xmlns:local1="clr-namespace:TextToSpeechWPF.Behaviors"
         SizeToContent="WidthAndHeight"
         mc:Ignorable="d"
         Title="TextToSpeech">
@@ -80,8 +82,13 @@
                                     Command="{Binding PlayCommand}"/>
                             <TextBlock Name="CurrentTime" Text="{Binding CurrentTime.Value}"/>
                             <Slider Minimum="0" Maximum="{Binding AudioTimeRange.Value}" Width="200" 
-                                    IsEnabled="False" SmallChange="0" LargeChange="0"
-                                    />
+                                    Value="{Binding CurrentTime.Value, Mode=OneWay}"
+                                    SmallChange="0" LargeChange="0"
+                                    >
+                                <bhv:Interaction.Behaviors>
+                                    <behaviors:SliderBehavior Value="{Binding CurrentTime.Value, Mode=TwoWay}"/>
+                                </bhv:Interaction.Behaviors>
+                            </Slider>
                             <TextBlock Name="RemainTime" Text="{Binding RemainTime.Value}"/>
                         </StackPanel>
                     </DataTemplate>
