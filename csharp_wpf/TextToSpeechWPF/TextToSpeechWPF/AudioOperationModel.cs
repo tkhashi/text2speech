@@ -35,6 +35,8 @@ namespace TextToSpeechWPF
             CurrentTime = new ReactivePropertySlim<TimeSpan>(TimeSpan.Zero);
             AudioTimeRange = new ReactivePropertySlim<TimeSpan>(_reader.TotalTime);
             RemainTime = new ReactivePropertySlim<TimeSpan>(TimeSpan.Zero);
+
+            CurrentTime.Subscribe(_ => Debug.WriteLine("test"));
         }
 
         public void ChangeFileName(string fileName)
@@ -67,7 +69,7 @@ namespace TextToSpeechWPF
         public void Play()
         {
             // 停止時・再生時は初期化しない
-            if (_outputDevice.PlaybackState is not (PlaybackState.Paused or PlaybackState.Playing))
+            if (_outputDevice.PlaybackState is PlaybackState.Stopped)
             {
                 _outputDevice.Init(_reader);
                 _reader.Position = 0;
@@ -89,6 +91,10 @@ namespace TextToSpeechWPF
             _outputDevice.Pause();
         }
 
+        public void ChangePosition(TimeSpan time)
+        {
+            _reader.CurrentTime = time;
+        }
         public void Dispose()
         {
             _disposables.Dispose();

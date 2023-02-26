@@ -80,16 +80,17 @@
                                     Background="Transparent"
                                     BorderThickness="0"
                                     Command="{Binding PlayCommand}"/>
-                            <TextBlock Name="CurrentTime" Text="{Binding CurrentTime.Value}"/>
+                            <TextBlock Text="{Binding CurrentTime.Value}"/>
+                            <TextBlock Text=" / "/>
+                            <TextBlock Text="{Binding AudioTimeRange.Value}"/>
                             <Slider Minimum="0" Maximum="{Binding AudioTimeRange.Value}" Width="200" 
-                                    Value="{Binding CurrentTime.Value, Mode=OneWay}"
-                                    SmallChange="0" LargeChange="0"
+                                    Value="{Binding CurrentTime.Value, UpdateSourceTrigger=PropertyChanged}"
+                                    IsMoveToPointEnabled="true"
                                     >
                                 <bhv:Interaction.Behaviors>
-                                    <behaviors:SliderBehavior Value="{Binding CurrentTime.Value, Mode=TwoWay}"/>
+                                    <behaviors:SliderBehavior ValueChangedCommand="{Binding ValueChangedCommnad}" Value="{Binding CurrentTime.Value, Mode=TwoWay}"/>
                                 </bhv:Interaction.Behaviors>
                             </Slider>
-                            <TextBlock Name="RemainTime" Text="{Binding RemainTime.Value}"/>
                         </StackPanel>
                     </DataTemplate>
                 </DataGrid.Resources>
