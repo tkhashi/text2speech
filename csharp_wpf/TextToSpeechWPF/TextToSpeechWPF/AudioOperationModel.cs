@@ -94,6 +94,7 @@ namespace TextToSpeechWPF
         public void ChangePosition(TimeSpan time)
         {
             _reader.CurrentTime = time;
+            CurrentTime.Value = time;
         }
         public void Dispose()
         {

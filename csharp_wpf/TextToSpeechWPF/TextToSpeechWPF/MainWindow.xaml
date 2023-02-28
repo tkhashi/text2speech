@@ -83,12 +83,12 @@
                             <TextBlock Text="{Binding CurrentTime.Value}"/>
                             <TextBlock Text=" / "/>
                             <TextBlock Text="{Binding AudioTimeRange.Value}"/>
-                            <Slider Minimum="0" Maximum="{Binding AudioTimeRange.Value}" Width="200" 
-                                    Value="{Binding CurrentTime.Value, UpdateSourceTrigger=PropertyChanged}"
-                                    IsMoveToPointEnabled="true"
-                                    >
+                            <Slider Minimum="0" Maximum="{Binding AudioSliderTimeRange.Value}" Width="200" 
+                                    Value="{Binding CurrentSliderTime.Value, UpdateSourceTrigger=PropertyChanged}"
+                                    IsMoveToPointEnabled="true">
                                 <bhv:Interaction.Behaviors>
-                                    <behaviors:SliderBehavior ValueChangedCommand="{Binding ValueChangedCommnad}" Value="{Binding CurrentTime.Value, Mode=TwoWay}"/>
+                                    <behaviors:SliderBehavior ValueChangedCommand="{Binding ValueChangedCommnad}"
+                                                              Value="{Binding CurrentSliderTime.Value, Mode=TwoWay}"/>
                                 </bhv:Interaction.Behaviors>
                             </Slider>
                         </StackPanel>

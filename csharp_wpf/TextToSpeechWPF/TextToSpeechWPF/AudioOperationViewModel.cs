@@ -18,13 +18,19 @@ namespace TextToSpeechWPF
         public ReactiveCommand DeleteCommand { get; }=new();
         public ReactiveCommand PlayCommand { get; } = new ();
         public ReactiveCommand StopCommand { get; } = new ();
-        public ReactiveCommand<string> ValueChangedCommnad { get; } = new ();
+        public ReactiveCommand<double> ValueChangedCommnad { get; } = new ();
 
         public ReactivePropertySlim<string> Name { get; } 
         public ReactivePropertySlim<bool> IsPlaying { get; } = new ();
+
+        // 表示用プロパティ
         public ReactiveProperty<string> CurrentTime { get; }
         public ReactiveProperty<string> AudioTimeRange { get; }
         public ReactiveProperty<string> RemainTime { get; }
+        // Sliderコントロールへ渡す用プロパティ
+        public ReactiveProperty<double> CurrentSliderTime { get; }
+        public ReactiveProperty<double> AudioSliderTimeRange { get; }
+        public ReactiveProperty<double> RemainSliderTime { get; }
 
         public AudioOperationViewModel(string path)
         {
@@ -56,11 +62,11 @@ namespace TextToSpeechWPF
             ValueChangedCommnad
                 .Subscribe(x =>
                 {
-                    IsPlaying.Value = false;
-                    _model.Stop();
+                    // 通常再生時もストップしてしまう。Slider thumb操作時のみ来るようにする。
+                    //IsPlaying.Value = false;
+                    //_model.Stop();
 
-                    var canParse = TimeSpan.TryParse(x, out var time);
-                    if (!canParse) return;
+                    var time = TimeSpan.FromMilliseconds(x);
                     _model.ChangePosition(time);
                 })
                 .AddTo(_disposables);
@@ -69,6 +75,10 @@ namespace TextToSpeechWPF
             CurrentTime = _model.CurrentTime.Select(x => x.ToString(@"mm\:ss")).ToReactiveProperty();
             AudioTimeRange = _model.AudioTimeRange.Select(x => x.ToString(@"mm\:ss")).ToReactiveProperty();
             RemainTime = _model.AudioTimeRange.Select(x => x.ToString(@"mm\:ss")).ToReactiveProperty();
+
+            CurrentSliderTime = _model.CurrentTime.Select(x => x.TotalMilliseconds).ToReactiveProperty();
+            AudioSliderTimeRange = _model.AudioTimeRange.Select(x => x.TotalMilliseconds).ToReactiveProperty();
+            RemainSliderTime = _model.AudioTimeRange.Select(x => x.TotalMilliseconds).ToReactiveProperty();
         }
 
         public void Dispose()
