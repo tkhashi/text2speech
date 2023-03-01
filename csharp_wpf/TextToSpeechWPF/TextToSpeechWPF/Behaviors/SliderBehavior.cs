@@ -45,9 +45,13 @@ namespace TextToSpeechWPF.Behaviors
 
         private void ChangeValue(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (e.OldValue == e.NewValue) return;
-            Value = e.NewValue;
-            ValueChangedCommand.Execute(Value);
+            // ViewModelからの変更は受け付けない
+            // View(UI側)からの変更の場合のみCommand発火
+            if (Value != e.NewValue)
+            {
+                Value = e.NewValue;
+                ValueChangedCommand.Execute(Value);
+            }
         }
 
 

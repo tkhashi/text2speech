@@ -66,6 +66,7 @@ namespace TextToSpeechWPF
         public void DeleteMp4()
         {
         }
+
         public void Play()
         {
             // 停止時・再生時は初期化しない
