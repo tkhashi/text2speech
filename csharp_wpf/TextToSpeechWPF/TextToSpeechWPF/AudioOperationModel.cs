@@ -14,11 +14,11 @@ namespace TextToSpeechWPF
         private readonly WaveOutEvent _outputDevice;
         private AudioFileReader _reader;
 
-        public string FileName { get; private set; } 
+        public string FileName { get; private set; }
 
-        public ReactivePropertySlim<TimeSpan> CurrentTime { get; } = new ();
-        public ReactivePropertySlim<TimeSpan> AudioTimeRange { get; } = new ();
-        public ReactivePropertySlim<TimeSpan> RemainTime { get; } = new ();
+        public ReactivePropertySlim<TimeSpan> CurrentTime { get; } = new();
+        public ReactivePropertySlim<TimeSpan> AudioTimeRange { get; } = new();
+        public ReactivePropertySlim<TimeSpan> RemainTime { get; } = new();
 
         public AudioOperationModel(string path)
         {

@@ -2,26 +2,25 @@
 using Reactive.Bindings.Extensions;
 using System;
 using System.Reactive.Disposables;
-using System.Text;
 
 namespace TextToSpeechWPF
 {
     public class AudioOperationViewModel : IDisposable
     {
-        private readonly CompositeDisposable _disposables = new ();
+        private readonly CompositeDisposable _disposables = new();
         private readonly AudioOperationModel _model;
 
         // tempフォルダからユーザーが触れるフォルダーへ移動する
         public ReactiveCommand SaveCommand { get; } = new();
-        public ReactiveCommand DeleteCommand { get; }=new();
-        public ReactiveCommand PlayCommand { get; } = new ();
-        public ReactiveCommand StopCommand { get; } = new ();
+        public ReactiveCommand DeleteCommand { get; } = new();
+        public ReactiveCommand PlayCommand { get; } = new();
+        public ReactiveCommand StopCommand { get; } = new();
 
-        public ReactivePropertySlim<string> Name { get; } 
-        public ReactivePropertySlim<bool> IsPlaying { get; } = new ();
-        public ReactivePropertySlim<string> CurrentTime { get; } = new ();
-        public ReactivePropertySlim<double> AudioTimeRange { get; } = new ();
-        public ReactivePropertySlim<string> RemainTime { get; } = new ();
+        public ReactivePropertySlim<string> Name { get; }
+        public ReactivePropertySlim<bool> IsPlaying { get; } = new();
+        public ReactivePropertySlim<string> CurrentTime { get; } = new();
+        public ReactivePropertySlim<double> AudioTimeRange { get; } = new();
+        public ReactivePropertySlim<string> RemainTime { get; } = new();
 
         public AudioOperationViewModel(string path)
         {
@@ -35,7 +34,7 @@ namespace TextToSpeechWPF
                 .AddTo(_disposables);
 
             PlayCommand
-                .Subscribe(() => 
+                .Subscribe(() =>
                 {
                     IsPlaying.Value = true;
                     _model.Play();
@@ -50,7 +49,7 @@ namespace TextToSpeechWPF
                 })
                 .AddTo(_disposables);
 
-            Name = new ReactivePropertySlim<string> (_model.FileName);
+            Name = new ReactivePropertySlim<string>(_model.FileName);
         }
 
         public void Dispose()
