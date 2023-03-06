@@ -2,7 +2,7 @@
 using Reactive.Bindings.Extensions;
 using System;
 using System.Reactive.Disposables;
-using System.Text;
+using TextToSpeechWPF.Model;
 
 namespace TextToSpeechWPF
 {
