@@ -8,7 +8,7 @@ using System.Reactive.Disposables;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace TextToSpeechWPF
+namespace TextToSpeechWPF.Model
 {
     public class AudioOperationModel : IDisposable
     {
@@ -19,9 +19,9 @@ namespace TextToSpeechWPF
 
         public string FileName { get; private set; }
 
-        public ReactivePropertySlim<TimeSpan> CurrentTime { get; }
-        public ReactivePropertySlim<TimeSpan> AudioTimeRange { get; } 
-        public ReactivePropertySlim<TimeSpan> RemainTime { get; } 
+        public ReactivePropertySlim<TimeSpan> CurrentTime { get; } = new();
+        public ReactivePropertySlim<TimeSpan> AudioTimeRange { get; } = new();
+        public ReactivePropertySlim<TimeSpan> RemainTime { get; } = new();
 
         public AudioOperationModel(string path)
         {

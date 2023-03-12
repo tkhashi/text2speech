@@ -5,6 +5,7 @@ using System.Reactive.Disposables;
 using System.Windows.Input;
 using System.IO;
 using System.Linq;
+using TextToSpeechWPF.Model;
 
 namespace TextToSpeechWPF
 {
@@ -15,11 +16,11 @@ namespace TextToSpeechWPF
 
         public ReactivePropertySlim<bool> IsGenerating { get; }
         public ReactivePropertySlim<string> InputText { get; }
-        public ReactivePropertySlim<double> SpeakingRate { get; } 
-        public ReactivePropertySlim<double> Pitch { get; } 
-        public ReactiveCommand SpeechCommand { get; } = new ();
+        public ReactivePropertySlim<double> SpeakingRate { get; }
+        public ReactivePropertySlim<double> Pitch { get; }
+        public ReactiveCommand SpeechCommand { get; } = new();
 
-        public ReactiveCollection<AudioOperationViewModel> AudioOperations { get; } = new ();
+        public ReactiveCollection<AudioOperationViewModel> AudioOperations { get; } = new();
 
         public MainWindowViewModel()
         {
@@ -45,7 +46,8 @@ namespace TextToSpeechWPF
             Mouse.OverrideCursor = Cursors.Wait;
             try
             {
-                _model.Speech();
+                var savePath = _model.Speech();
+                AddFilePath(savePath);
             }
             catch (Exception e)
             {

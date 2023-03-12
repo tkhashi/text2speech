@@ -3,12 +3,13 @@ using Reactive.Bindings.Extensions;
 using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using TextToSpeechWPF.Model;
 
 namespace TextToSpeechWPF
 {
     public class AudioOperationViewModel : IDisposable
     {
-        private readonly CompositeDisposable _disposables = new ();
+        private readonly CompositeDisposable _disposables = new();
         private readonly AudioOperationModel _model;
 
         // tempフォルダからユーザーが触れるフォルダーへ移動する
@@ -42,7 +43,7 @@ namespace TextToSpeechWPF
                 .AddTo(_disposables);
 
             PlayCommand
-                .Subscribe(() => 
+                .Subscribe(() =>
                 {
                     IsPlaying.Value = true;
                     _model.Play();
