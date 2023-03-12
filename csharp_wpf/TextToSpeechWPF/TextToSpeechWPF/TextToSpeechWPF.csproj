@@ -12,12 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="credentials.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="NAudio" Version="2.1.0" />
     <PackageReference Include="NAudio.Core" Version="2.1.0" />
     <PackageReference Include="ReactiveProperty.Core" Version="8.2.0" />

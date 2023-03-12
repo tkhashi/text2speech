@@ -7,7 +7,7 @@ using System.IO;
 using System.Reactive.Disposables;
 using System.Windows;
 
-namespace TextToSpeechWPF
+namespace TextToSpeechWPF.Model
 {
     public class AudioOperationModel : IDisposable
     {

@@ -5,6 +5,7 @@ using System.Reactive.Disposables;
 using System.Windows.Input;
 using System.IO;
 using System.Linq;
+using TextToSpeechWPF.Model;
 
 namespace TextToSpeechWPF
 {
