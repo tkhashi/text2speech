@@ -5,6 +5,7 @@ using System.Reactive.Disposables;
 using System.Windows.Input;
 using System.IO;
 using System.Linq;
+using TextToSpeechWPF.Model;
 
 namespace TextToSpeechWPF
 {
@@ -38,11 +39,6 @@ namespace TextToSpeechWPF
             Directory.GetFiles(sourceDir, "*.mp3", SearchOption.TopDirectoryOnly)
                 .ToList()
                 .ForEach(x => AddFilePath(x));
-
-            // Mock
-            AddFilePath("test1");
-            AddFilePath("test2");
-            AddFilePath("test3");
         }
 
         private void Speech()

@@ -6,7 +6,7 @@ using TextToSpeech.AudioConfig;
 using TextToSpeech.SynthesisInputConfig;
 using TextToSpeech.VoiceSelection;
 
-namespace TextToSpeechWPF
+namespace TextToSpeechWPF.Model
 {
     class MainWindowModel
     {

@@ -2,10 +2,12 @@
 using NAudio.Wave;
 using Reactive.Bindings;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reactive.Disposables;
+using System.Windows;
 
-namespace TextToSpeechWPF
+namespace TextToSpeechWPF.Model
 {
     public class AudioOperationModel : IDisposable
     {
@@ -25,12 +27,8 @@ namespace TextToSpeechWPF
             _path = path;
             _outputDevice = new WaveOutEvent();
             _disposables.Add(_outputDevice);
-
-            if (File.Exists(path))
-            {
-                _reader = new AudioFileReader(path);
-                _disposables.Add(_reader);
-            }
+            _reader = new AudioFileReader(path);
+            _disposables.Add(_reader);
 
             FileName = Path.GetFileNameWithoutExtension(path);
         }
@@ -52,7 +50,11 @@ namespace TextToSpeechWPF
                 CheckPathExists = true
             };
 
-            sfd.ShowDialog();
+            if (sfd.ShowDialog() ?? false)
+            {
+                File.Copy(_path, sfd.FileName, overwrite: sfd.OverwritePrompt);
+                MessageBox.Show("ファイルを保存しました。", "保存", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         public void DeleteMp4()
