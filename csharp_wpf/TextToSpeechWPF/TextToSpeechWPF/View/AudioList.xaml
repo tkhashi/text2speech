@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TextToSpeechWPF"
+             xmlns:view="clr-namespace:TextToSpeechWPF.View"
              xmlns:behaviors="clr-namespace:TextToSpeechWPF.Behaviors"
              xmlns:bhv="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
@@ -31,7 +32,8 @@
                             Command="{Binding SaveCommand}"/>
                 </DataTemplate>
                 <DataTemplate x:Key="MediaPlayerTemplate">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <view:AudioItem/>
+                    <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <Button Content="&#xE769;"
                                 FontFamily="Segoe MDL2 Assets"
                                 Background="Transparent"
@@ -46,14 +48,15 @@
                         <TextBlock Text=" / "/>
                         <TextBlock Text="{Binding AudioTimeRange.Value}"/>
                         <Slider Minimum="0" Maximum="{Binding AudioSliderTimeRange.Value}" Width="200" 
+                                Thumb.DragDelta="Slider_DragDelta"
                                 Value="{Binding CurrentSliderTime.Value, UpdateSourceTrigger=PropertyChanged}"
                                 IsMoveToPointEnabled="true">
-                            <bhv:Interaction.Behaviors>
+                            --><!--<bhv:Interaction.Behaviors>
                                 <behaviors:SliderBehavior ValueChangedCommand="{Binding ValueChangedCommnad}"
                                                           Value="{Binding CurrentSliderTime.Value, Mode=TwoWay}"/>
-                            </bhv:Interaction.Behaviors>
+                            </bhv:Interaction.Behaviors>--><!--
                         </Slider>
-                    </StackPanel>
+                    </StackPanel>-->
                 </DataTemplate>
             </DataGrid.Resources>
             <DataGrid.Columns>

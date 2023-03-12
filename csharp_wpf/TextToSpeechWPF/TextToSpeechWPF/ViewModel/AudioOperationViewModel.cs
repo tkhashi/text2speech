@@ -80,6 +80,11 @@ namespace TextToSpeechWPF
             RemainSliderTime = _model.AudioTimeRange.Select(x => x.TotalMilliseconds).ToReactiveProperty();
         }
 
+        public void AddCurrentTime(double millisecond)
+        {
+            _model.ChangePosition(TimeSpan.FromMilliseconds(millisecond));
+        }
+
         public void Dispose()
         {
             _disposables.Dispose();
