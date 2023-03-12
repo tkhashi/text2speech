@@ -22,4 +22,10 @@
     <ProjectReference Include="..\..\..\csharp_console\TextToSpeech\API\API.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="ViewModel\" />
+    <Folder Include="View\" />
+  </ItemGroup>
+
 </Project>
