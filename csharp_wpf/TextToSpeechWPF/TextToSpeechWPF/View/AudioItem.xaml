@@ -18,16 +18,17 @@
                 Background="Transparent"
                 BorderThickness="0"
                 Command="{Binding PlayCommand}"/>
-        <TextBlock Text="{Binding CurrentTime.Value}"/>
+        <TextBlock Text="{Binding CurrentTime.Value, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock Text=" / "/>
         <TextBlock Text="{Binding AudioTimeRange.Value}"/>
         <Grid PreviewMouseDown="Slider_PreviewMouseLeftButtonDown">
             <Slider Minimum="0" Maximum="{Binding AudioSliderTimeRange.Value}" Width="200" 
                     Thumb.DragStarted="Slider_DragStarted"
+                    Thumb.DragCompleted="Slider_DragCompleted"
                     ValueChanged="Slider_ValueChanged"
                     Value="{Binding CurrentSliderTime.Value, UpdateSourceTrigger=PropertyChanged}"
                     IsMoveToPointEnabled="true">
-        </Slider>
+            </Slider>
         </Grid>
     </StackPanel>
 </UserControl>

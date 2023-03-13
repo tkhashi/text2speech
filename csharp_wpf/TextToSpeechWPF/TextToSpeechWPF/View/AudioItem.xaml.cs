@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace TextToSpeechWPF.View
 {
@@ -45,6 +35,11 @@ namespace TextToSpeechWPF.View
             _isDragging = true;
         }
 
+        private void Slider_DragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            _isDragging = false;
+        }
+
         // UI操作時のみVMのValueChangedCommandを発火
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -52,7 +47,7 @@ namespace TextToSpeechWPF.View
             if (!_vm.ValueChangedCommnad.CanExecute()) return;
             _vm.ValueChangedCommnad.Execute(e.NewValue);
 
-            _isDragging = false;
+           //_isDragging = false;
         }
     }
 }

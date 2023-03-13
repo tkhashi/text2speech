@@ -61,10 +61,6 @@ namespace TextToSpeechWPF
             ValueChangedCommnad
                 .Subscribe(x =>
                 {
-                    // 通常再生時もストップしてしまう。Slider thumb操作時のみ来るようにする。
-                    //IsPlaying.Value = false;
-                    //_model.Stop();
-
                     var time = TimeSpan.FromMilliseconds(x);
                     _model.ChangePosition(time);
                 })
@@ -78,11 +74,6 @@ namespace TextToSpeechWPF
             CurrentSliderTime = _model.CurrentTime.Select(x => x.TotalMilliseconds).ToReactiveProperty();
             AudioSliderTimeRange = _model.AudioTimeRange.Select(x => x.TotalMilliseconds).ToReactiveProperty();
             RemainSliderTime = _model.AudioTimeRange.Select(x => x.TotalMilliseconds).ToReactiveProperty();
-        }
-
-        public void AddCurrentTime(double millisecond)
-        {
-            _model.ChangePosition(TimeSpan.FromMilliseconds(millisecond));
         }
 
         public void Dispose()
