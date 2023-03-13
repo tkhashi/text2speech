@@ -33,30 +33,6 @@
                 </DataTemplate>
                 <DataTemplate x:Key="MediaPlayerTemplate">
                     <view:AudioItem/>
-                    <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                        <Button Content="&#xE769;"
-                                FontFamily="Segoe MDL2 Assets"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Command="{Binding StopCommand}"/>
-                        <Button Content="&#xE768;"
-                                FontFamily="Segoe MDL2 Assets"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Command="{Binding PlayCommand}"/>
-                        <TextBlock Text="{Binding CurrentTime.Value}"/>
-                        <TextBlock Text=" / "/>
-                        <TextBlock Text="{Binding AudioTimeRange.Value}"/>
-                        <Slider Minimum="0" Maximum="{Binding AudioSliderTimeRange.Value}" Width="200" 
-                                Thumb.DragDelta="Slider_DragDelta"
-                                Value="{Binding CurrentSliderTime.Value, UpdateSourceTrigger=PropertyChanged}"
-                                IsMoveToPointEnabled="true">
-                            --><!--<bhv:Interaction.Behaviors>
-                                <behaviors:SliderBehavior ValueChangedCommand="{Binding ValueChangedCommnad}"
-                                                          Value="{Binding CurrentSliderTime.Value, Mode=TwoWay}"/>
-                            </bhv:Interaction.Behaviors>--><!--
-                        </Slider>
-                    </StackPanel>-->
                 </DataTemplate>
             </DataGrid.Resources>
             <DataGrid.Columns>

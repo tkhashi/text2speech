@@ -1,6 +1,9 @@
 ﻿using Microsoft.Win32;
+using NAudio.CoreAudioApi;
+using NAudio.Utils;
 using NAudio.Wave;
 using Reactive.Bindings;
+using Reactive.Bindings.Extensions;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -19,24 +22,20 @@ namespace TextToSpeechWPF.Model
 
         public string FileName { get; private set; }
 
-        public ReactivePropertySlim<TimeSpan> CurrentTime { get; } = new();
-        public ReactivePropertySlim<TimeSpan> AudioTimeRange { get; } = new();
-        public ReactivePropertySlim<TimeSpan> RemainTime { get; } = new();
+        public ReactivePropertySlim<TimeSpan> CurrentTime { get; } 
+        public ReactivePropertySlim<TimeSpan> AudioTimeRange { get; } 
+        public ReactivePropertySlim<TimeSpan> RemainTime { get; } 
 
         public AudioOperationModel(string path)
         {
             _path = path;
-            _outputDevice = new WaveOutEvent();
-            _disposables.Add(_outputDevice);
-            _reader = new AudioFileReader(path);
-            _disposables.Add(_reader);
+            _outputDevice = new WaveOutEvent().AddTo(_disposables);
+            _reader = new AudioFileReader(path).AddTo(_disposables);
 
             FileName = Path.GetFileNameWithoutExtension(path);
             CurrentTime = new ReactivePropertySlim<TimeSpan>(TimeSpan.Zero);
             AudioTimeRange = new ReactivePropertySlim<TimeSpan>(_reader.TotalTime);
             RemainTime = new ReactivePropertySlim<TimeSpan>(TimeSpan.Zero);
-
-            CurrentTime.Subscribe(_ => Debug.WriteLine("test"));
         }
 
         public void ChangeFileName(string fileName)

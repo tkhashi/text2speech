@@ -46,8 +46,6 @@ namespace TextToSpeechWPF.View
             if (!_isDragging) return;
             if (!_vm.ValueChangedCommnad.CanExecute()) return;
             _vm.ValueChangedCommnad.Execute(e.NewValue);
-
-           //_isDragging = false;
         }
     }
 }
