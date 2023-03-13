@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reactive.Disposables;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace TextToSpeechWPF.Model
@@ -31,6 +32,11 @@ namespace TextToSpeechWPF.Model
             _disposables.Add(_reader);
 
             FileName = Path.GetFileNameWithoutExtension(path);
+            CurrentTime = new ReactivePropertySlim<TimeSpan>(TimeSpan.Zero);
+            AudioTimeRange = new ReactivePropertySlim<TimeSpan>(_reader.TotalTime);
+            RemainTime = new ReactivePropertySlim<TimeSpan>(TimeSpan.Zero);
+
+            CurrentTime.Subscribe(_ => Debug.WriteLine("test"));
         }
 
         public void ChangeFileName(string fileName)
@@ -60,15 +66,25 @@ namespace TextToSpeechWPF.Model
         public void DeleteMp4()
         {
         }
+
         public void Play()
         {
             // 停止時・再生時は初期化しない
-            if (_outputDevice.PlaybackState is not (PlaybackState.Paused or PlaybackState.Playing))
+            if (_outputDevice.PlaybackState is PlaybackState.Stopped)
             {
                 _outputDevice.Init(_reader);
                 _reader.Position = 0;
             }
             _outputDevice.Play();
+
+            Task.Run(() =>
+            {
+                while (_outputDevice.PlaybackState is PlaybackState.Playing)
+                {
+                    CurrentTime.Value = _reader.CurrentTime;
+                    RemainTime.Value = AudioTimeRange.Value - CurrentTime.Value;
+                }
+            });
         }
 
         public void Stop()
@@ -76,6 +92,11 @@ namespace TextToSpeechWPF.Model
             _outputDevice.Pause();
         }
 
+        public void ChangePosition(TimeSpan time)
+        {
+            _reader.CurrentTime = time;
+            CurrentTime.Value = time;
+        }
         public void Dispose()
         {
             _disposables.Dispose();
