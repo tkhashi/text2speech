@@ -40,6 +40,11 @@ namespace TextToSpeechWPF.View
             _isDragging = false;
         }
 
+        private void Slider_DragDelta(object sender, DragDeltaEventArgs e)
+        {
+            _isDragging = true;
+        }
+
         // UI操作時のみVMのValueChangedCommandを発火
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -47,7 +52,7 @@ namespace TextToSpeechWPF.View
             if (!_vm.ValueChangedCommnad.CanExecute()) return;
             _vm.ValueChangedCommnad.Execute(e.NewValue);
 
-           //_isDragging = false;
+            _isDragging = false;
         }
     }
 }

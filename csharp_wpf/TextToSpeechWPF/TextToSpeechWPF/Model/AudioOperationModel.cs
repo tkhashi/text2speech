@@ -75,6 +75,7 @@ namespace TextToSpeechWPF.Model
                 _outputDevice.Init(_reader);
                 _reader.Position = 0;
             }
+
             _outputDevice.Play();
 
             Task.Run(() =>
@@ -83,6 +84,10 @@ namespace TextToSpeechWPF.Model
                 {
                     CurrentTime.Value = _reader.CurrentTime;
                     RemainTime.Value = AudioTimeRange.Value - CurrentTime.Value;
+
+                    if (CurrentTime.Value != AudioTimeRange.Value) continue;
+                    _reader.Position = 0;
+                    CurrentTime.Value = TimeSpan.Zero;
                 }
             });
         }
@@ -95,8 +100,9 @@ namespace TextToSpeechWPF.Model
         public void ChangePosition(TimeSpan time)
         {
             _reader.CurrentTime = time;
-            CurrentTime.Value = time;
+            CurrentTime.Value = _reader.CurrentTime;
         }
+
         public void Dispose()
         {
             _disposables.Dispose();

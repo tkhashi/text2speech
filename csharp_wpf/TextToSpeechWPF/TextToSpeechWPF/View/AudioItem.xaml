@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TextToSpeechWPF.View"
+             xmlns:viewModel="clr-namespace:TextToSpeechWPF"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance {x:Type viewModel:AudioOperationViewModel}}"
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
         <Button Content="&#xE769;"
@@ -25,6 +27,7 @@
             <Slider Minimum="0" Maximum="{Binding AudioSliderTimeRange.Value}" Width="200" 
                     Thumb.DragStarted="Slider_DragStarted"
                     Thumb.DragCompleted="Slider_DragCompleted"
+                    Thumb.DragDelta="Slider_DragDelta"
                     ValueChanged="Slider_ValueChanged"
                     Value="{Binding CurrentSliderTime.Value, UpdateSourceTrigger=PropertyChanged}"
                     IsMoveToPointEnabled="true">

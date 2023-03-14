@@ -14,18 +14,20 @@ namespace TextToSpeechWPF
 
         // tempフォルダからユーザーが触れるフォルダーへ移動する
         public ReactiveCommand SaveCommand { get; } = new();
-        public ReactiveCommand DeleteCommand { get; }=new();
-        public ReactiveCommand PlayCommand { get; } = new ();
-        public ReactiveCommand StopCommand { get; } = new ();
-        public ReactiveCommand<double> ValueChangedCommnad { get; } = new ();
+        public ReactiveCommand DeleteCommand { get; } = new();
+        public ReactiveCommand PlayCommand { get; } = new();
+        public ReactiveCommand StopCommand { get; } = new();
+        public ReactiveCommand<double> ValueChangedCommnad { get; } = new();
 
-        public ReactivePropertySlim<string> Name { get; } 
-        public ReactivePropertySlim<bool> IsPlaying { get; } = new ();
+        public ReactivePropertySlim<string> Name { get; }
+        public ReactivePropertySlim<bool> IsPlaying { get; } = new();
 
         // 表示用プロパティ
         public ReactiveProperty<string> CurrentTime { get; }
         public ReactiveProperty<string> AudioTimeRange { get; }
+
         public ReactiveProperty<string> RemainTime { get; }
+
         // Sliderコントロールへ渡す用プロパティ
         public ReactiveProperty<double> CurrentSliderTime { get; }
         public ReactiveProperty<double> AudioSliderTimeRange { get; }
@@ -66,7 +68,7 @@ namespace TextToSpeechWPF
                 })
                 .AddTo(_disposables);
 
-            Name = new ReactivePropertySlim<string> (_model.FileName);
+            Name = new ReactivePropertySlim<string>(_model.FileName);
             CurrentTime = _model.CurrentTime.Select(x => x.ToString(@"mm\:ss")).ToReactiveProperty();
             AudioTimeRange = _model.AudioTimeRange.Select(x => x.ToString(@"mm\:ss")).ToReactiveProperty();
             RemainTime = _model.AudioTimeRange.Select(x => x.ToString(@"mm\:ss")).ToReactiveProperty();
