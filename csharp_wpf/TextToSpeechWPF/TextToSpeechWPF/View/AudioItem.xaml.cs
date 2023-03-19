@@ -49,8 +49,8 @@ namespace TextToSpeechWPF.View
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!_isDragging) return;
-            if (!_vm.ValueChangedCommnad.CanExecute()) return;
-            _vm.ValueChangedCommnad.Execute(e.NewValue);
+            if (!_vm.ValueChangedCommand.CanExecute()) return;
+            _vm.ValueChangedCommand.Execute(e.NewValue);
 
             _isDragging = false;
         }
