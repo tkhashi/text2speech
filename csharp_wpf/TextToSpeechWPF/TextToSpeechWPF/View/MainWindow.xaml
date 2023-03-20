@@ -12,6 +12,7 @@
         <local:MainWindowViewModel/>
     </Window.DataContext>
     <StackPanel>
+        <view:MenuBar/>
         <view:SpeechInput/>
         <view:AudioList/>
     </StackPanel>

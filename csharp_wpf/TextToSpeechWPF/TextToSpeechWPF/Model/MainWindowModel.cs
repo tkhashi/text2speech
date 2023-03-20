@@ -13,6 +13,11 @@ internal class MainWindowModel
 {
     private const double DefaultRate = 1;
     private const double DefaultPitch = 0;
+
+    private static readonly string LocalAppData =
+        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+    private static readonly string CredentialsPath = @"./credentials.json";
     public ReactivePropertySlim<bool> IsGenerating { get; } = new();
     public ReactivePropertySlim<string> Text { get; } = new("");
     public ReactivePropertySlim<double> Rate { get; } = new(DefaultRate);
@@ -30,11 +35,10 @@ internal class MainWindowModel
         var savePath = Path.Combine(localAppData, "Text2Speech", fileName);
         try
         {
-            var credentials = @"./credentials.json";
-            if (File.Exists(credentials))
+            if (File.Exists(CredentialsPath))
             {
                 var gcEnv = "GOOGLE_APPLICATION_CREDENTIALS";
-                Environment.SetEnvironmentVariable(gcEnv, credentials);
+                Environment.SetEnvironmentVariable(gcEnv, CredentialsPath);
 
                 var client = TextToSpeechClient.Create();
                 var input = SynthesisInputFactory.Create().SetText(Text.Value);
@@ -72,5 +76,10 @@ internal class MainWindowModel
         Rate.Value = DefaultRate;
         Pitch.Value = DefaultPitch;
         return savePath;
+    }
+
+    public void SetCredentials(string path)
+    {
+        File.Copy(path, CredentialsPath, true);
     }
 }
